@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Show Data</title>
+</head>
+<body>
+    <h1>Show Data</h1>
+    <form method="POST">
+        <label for="table">Select Table:</label>
+        <select id="table" name="table" required>
+            <option value="" disabled selected>Select a table</option>
+            {% for table in tables %}
+            <option value="{{ table }}" {% if table_name == table %}selected{% endif %}>{{ table }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Show Data</button>
+    </form>
+
+    {% if table_data %}
+    <h2>Data in {{ table_name }}</h2>
+    <table border="1">
+        <tr>
+            {% for key in table_data[0].keys() %}
+            <th>{{ key }}</th>
+            {% endfor %}
+        </tr>
+        {% for row in table_data %}
+        <tr>
+            {% for value in row.values() %}
+            <td>{{ value }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+    {% elif table_name %}
+    <p>No data found in {{ table_name }}.</p>
+    {% endif %}
+</body>
+</html>

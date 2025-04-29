@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete Data</title>
+</head>
+<body>
+    <h1>Delete Data</h1>
+    <form method="POST">
+        <label for="table">Select Table:</label>
+        <select id="table" name="table" onchange="this.form.submit()" required>
+            <option value="" disabled selected>Select a table</option>
+            {% for table in tables %}
+            <option value="{{ table }}" {% if table_name == table %}selected{% endif %}>{{ table }}</option>
+            {% endfor %}
+        </select>
+    </form>
+
+    {% if table_data %}
+    <h2>Data in {{ table_name }}</h2>
+    <form method="POST">
+        <input type="hidden" name="table" value="{{ table_name }}">
+        <label for="row_id">Select Row to Delete:</label>
+        <select id="row_id" name="row_id" required>
+            {% for row in table_data %}
+            <option value="{{ row['_id'] }}">{{ row }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Delete</button>
+    </form>
+    {% endif %}
+
+    {% if message %}
+    <p>{{ message }}</p>
+    {% endif %}
+</body>
+</html>

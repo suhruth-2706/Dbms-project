@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Data</title>
+</head>
+<body>
+    <h1>Add Data</h1>
+
+    <form method="POST">
+        <label for="collection">Select Collection:</label>
+        <select id="collection" name="collection" onchange="this.form.submit()" required>
+            <option value="" disabled selected>Select a collection</option>
+            {% for collection in collections %}
+            <option value="{{ collection }}" {% if collection_name == collection %}selected{% endif %}>{{ collection }}</option>
+            {% endfor %}
+        </select>
+    </form>
+
+    {% if fields %}
+    <form method="POST">
+        <input type="hidden" name="collection" value="{{ collection_name }}">
+        {% for field in fields %}
+        <label for="{{ field }}">{{ field }}:</label>
+        <input type="text" id="{{ field }}" name="{{ field }}" required><br><br>
+        {% endfor %}
+        <button type="submit">Add Data</button>
+    </form>
+    {% endif %}
+
+    {% if message %}
+    <p>{{ message }}</p>
+    {% endif %}
+</body>
+</html>
